@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useNavigation } from "react-router-dom";
 import Profile from "../HomeComponents/Profile";
 import SignOut from "../HomeComponents/SignOut";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,7 +9,8 @@ const Nav = () => {
   const LoginStatus = useSelector((state) => state.auth.value);
   const [menuState, setMenuState] = useState(false);
   const [toggle, setToggle] = useState(false);
-
+  const navigator = useNavigate();
+  const dispatch = useDispatch();
   const handleMenuClick = () => {
     setMenuState(!menuState);
     setToggle(!toggle);
@@ -17,6 +18,7 @@ const Nav = () => {
   const hadleSignOutClick = (status) => {
     localStorage.setItem("userinfo", status);
     dispatch(removeAuth(false));
+    navigator("/");
   };
 
   return (
