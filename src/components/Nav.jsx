@@ -7,7 +7,6 @@ import { removeAuth } from "../services/reducers/Auth";
 
 const Nav = () => {
   const LoginStatus = useSelector((state) => state.auth.value);
-  const dispatch = useDispatch();
   const [menuState, setMenuState] = useState(false);
   const [toggle, setToggle] = useState(false);
 

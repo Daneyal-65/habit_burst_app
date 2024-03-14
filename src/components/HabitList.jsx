@@ -41,7 +41,7 @@ const Dashboard = () => {
         {data?.map((item, index) => {
           return (
             <ul
-              className="habit"
+              className="habit "
               key={index}
               style={{ backgroundColor: item.them }}
             >
