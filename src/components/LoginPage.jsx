@@ -59,7 +59,7 @@ function LoginPage() {
     } catch (err) {
       setis_loding(false);
       console.error(err);
-      setMessage("something went worng !!!" + err);
+      setMessage("something went worng in server!!!");
     }
 
     setFormData({
