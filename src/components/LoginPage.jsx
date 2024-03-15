@@ -5,7 +5,6 @@ import { baseUrl } from "../config";
 import Loading from "../HomeComponents/Loading";
 import { setAuthId } from "../services/reducers/Auth";
 import { useDispatch, useSelector } from "react-redux";
-export const currentuser = {};
 function LoginPage() {
   const dispatch = useDispatch();
 

@@ -10,8 +10,8 @@ import Support from "./components/SupportPage";
 import "./App.css";
 import LandingPage from "./components/LandingPage";
 import HabitList from "./components/HabitList";
-import { useDispatch, useSelector } from "react-redux";
-import { defaultSatatus, setAuth, setAuthId } from "./services/reducers/Auth";
+import { useDispatch } from "react-redux";
+import { setAuthId } from "./services/reducers/Auth";
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {

@@ -20,7 +20,8 @@ const LandingPage = () => {
             you can easily
             <strong className="text-red-600">
               {" "}
-              track and manage your <strong className="text-purple-500">daily</strong>{" "}
+              track and manage your{" "}
+              <strong className="text-purple-500">daily</strong>{" "}
             </strong>
             habits.
           </p>
@@ -28,7 +29,6 @@ const LandingPage = () => {
             <button>Get Started</button>
           </Link>
         </div>
-
       </main>
     </>
   );

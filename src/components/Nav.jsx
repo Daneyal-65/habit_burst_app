@@ -1,15 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useNavigation } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Profile from "../HomeComponents/Profile";
 import SignOut from "../HomeComponents/SignOut";
 import { useDispatch, useSelector } from "react-redux";
 import { removeAuth } from "../services/reducers/Auth";
 
 const Nav = () => {
-  const LoginStatus = useSelector((state) => state.auth.value);
   const [menuState, setMenuState] = useState(false);
+
   const [toggle, setToggle] = useState(false);
   const navigator = useNavigate();
+  const LoginStatus = useSelector((state) => state.auth.value);
+  const menuRef = useRef(null);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setToggle(false);
+        setMenuState(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   const dispatch = useDispatch();
   const handleMenuClick = () => {
     setMenuState(!menuState);
@@ -17,13 +33,21 @@ const Nav = () => {
   };
   const hadleSignOutClick = (status) => {
     localStorage.setItem("userinfo", status);
+    setMenuState(false);
+    setToggle(false);
     dispatch(removeAuth(false));
     navigator("/");
   };
 
   return (
-    <nav className="flexBetween max-container padding-container relative z-30 py-5">
-      <Link to="/home" className="flex justify-center items-center">
+    <nav
+      className="flexBetween max-container padding-container relative z-30 py-5"
+      ref={menuRef}
+    >
+      <Link
+        to={LoginStatus ? "/home" : "/login"}
+        className="flex justify-center items-center"
+      >
         <img className="w-10 h-18 mx-4" src="/logo.png" alt="logo" />
         <span className="text-black text-2xl tracking-wid">
           <strong>Habit Burst</strong>

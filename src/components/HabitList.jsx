@@ -21,7 +21,7 @@ const Dashboard = () => {
           userId: userId,
         },
       });
-      const userdata = res.data;
+      const userdata = await res.data;
       setdata(userdata);
       // Log the data from the response
       console.log(res.data);
@@ -30,11 +30,8 @@ const Dashboard = () => {
     }
   };
   useEffect(() => {
-    if (!userStatus) {
-      navigate("/login");
-    }
     fetchHabit();
-  }, [userStatus]);
+  }, []);
   return (
     <main className="main">
       <div className="container">
