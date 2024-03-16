@@ -10,10 +10,11 @@ import Support from "./components/SupportPage";
 import "./App.css";
 import LandingPage from "./components/LandingPage";
 import HabitList from "./components/HabitList";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setAuthId } from "./services/reducers/Auth";
 function App() {
   const dispatch = useDispatch();
+  const status = useSelector((s) => s.auth.value);
   useEffect(() => {
     if (localStorage.getItem("userInfo") !== null) {
       const status = JSON.parse(localStorage.getItem("userInfo"));
@@ -26,7 +27,7 @@ function App() {
         <Router>
           <Nav />
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={status ? <Home /> : <LandingPage />} />
             <Route path="/home" element={<Home />} />
             <Route path="/habitList" element={<HabitList />} />
             <Route path="/login" element={<Login />} />
