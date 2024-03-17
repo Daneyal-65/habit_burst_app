@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Colour from "./Colour";
 import Calendar from "react-calendar";
 import "./styles.css";
+import "./ToggleThemeButton.css";
 import { set_Reminder_state } from "../services/reducers/Reminder";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -29,18 +30,34 @@ export const Duration = ({ durationtime, onClick, durationID, active }) => {
 export const Daily = ({ them }) => {
   const dispatch = useDispatch();
   const [time, setTime] = useState("");
+  const [value, setValue] = useState("00:00");
+  const [toggleRight, setToggleRight] = useState(false);
   useEffect(() => {
     const intervalId = setInterval(() => {
       const date = new Date();
       const hours = date.getHours();
       const minutes = date.getMinutes();
-      setTime(` ${hours.toString()}:${minutes.toString()}`);
+      setTime(
+        ` ${hours.toString().padStart(2, "0")}:${minutes
+          .toString()
+          .padStart(2, "0")}`
+      );
     }, 1000);
     return () => clearInterval(intervalId);
   }, []);
+
   useEffect(() => {
-    if (time !== "") dispatch(set_Reminder_state(time));
-  }, [time]);
+    if (time !== "" && value === "00:00") dispatch(set_Reminder_state(time));
+    else if (value !== "00:00") dispatch(set_Reminder_state(value));
+    console.log(value);
+  }, [time, value]);
+
+  const handleSetTimerClick = () => {
+    setToggleRight(!toggleRight);
+  };
+  const handleTimeChange = (e) => {
+    setValue(e.target.value);
+  };
   return (
     <div
       style={{
@@ -49,11 +66,27 @@ export const Daily = ({ them }) => {
       }}
     >
       <p className="font-sans">
-        Reminder Time :
+        Reminder on Current Time :
         <strong className="font-black" style={{ letterSpacing: "5px" }}>
           {time}
         </strong>
       </p>
+      <div style={{ position: "relative", marginTop: "1rem" }}>
+        <label className="text-xs leading-3 font-black">
+          Set Reminder Time :
+        </label>
+        {toggleRight && (
+          <input
+            type="time"
+            className="time-input"
+            value={value}
+            onChange={handleTimeChange}
+          />
+        )}
+        <div className="radio-btn">
+          <Toggle onClick={handleSetTimerClick} />
+        </div>
+      </div>
     </div>
   );
 };
@@ -168,3 +201,26 @@ export const Reminder = ({ duration }) => {
     </div>
   );
 };
+
+function Toggle({ onClick }) {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleTheme = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+    onClick(isDarkMode);
+  };
+
+  return (
+    <div className="toggle-theme-container">
+      <button
+        type="button"
+        className={`toggle-button ${isDarkMode ? "dark-mode" : "light-mode"}`}
+        onClick={toggleTheme}
+      >
+        <div className="toggle-track"></div>
+      </button>
+    </div>
+  );
+}
+
+export default Toggle;

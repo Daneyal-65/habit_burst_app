@@ -5,11 +5,13 @@ import { useSelector } from "react-redux";
 import Colour from "../utils/Colour";
 import { Daily, Duration, Monthly, Reminder, Weekly } from "../utils/Duration";
 import "./customhabit.css";
+import Loading from "./Loading";
 const CustomHabit = () => {
   const userid = useSelector((state) => state.auth.id);
   const remTime = useSelector((state) => state.remind.value);
   const [userHabit, setUserHabit] = useState("");
   const [isUser, setIsUser] = useState(false);
+  const [isLoader, setIsLoader] = useState(false);
   const [description, setDescriptionn] = useState("");
   const [them, setThem] = useState("cyan");
   const [duration, setDuration] = useState(1);
@@ -18,6 +20,7 @@ const CustomHabit = () => {
   };
   const handleSubmitHabit = async (e) => {
     e.preventDefault();
+    setIsLoader(true);
     const date = new Date();
     const day = date.toLocaleString();
     const dayOfWeek = date.toLocaleDateString("en-US", {
@@ -46,6 +49,7 @@ const CustomHabit = () => {
     setDescriptionn("");
     setDuration(1);
     setThem("cyan");
+    setIsLoader(false);
   };
   const headStyle = {
     fontFamily: "sans-serif",
@@ -138,11 +142,15 @@ const CustomHabit = () => {
             <div>
               <button
                 type="submit"
-                className="w-48 px-4 py-2
-               bg-green-400 hover:bg-green-500 text-white
-               hover:text-black hover:font-black rounded-md "
+                className={`${
+                  isLoader
+                    ? ""
+                    : `w-48 px-4 py-2
+                bg-green-400 hover:bg-green-500 text-white
+                hover:text-black hover:font-black rounded-md`
+                }`}
               >
-                Add Habit
+                {isLoader ? <Loading /> : <span>Add Habit</span>}
               </button>
             </div>
           </form>
