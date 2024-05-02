@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { baseUrl } from "../config";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import Loading from "../HomeComponents/Loading";
 import "../styles/dashboar.css";
 const Dashboard = () => {
   const userId = useSelector((state) => state.auth.id);
@@ -10,7 +11,9 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   const [data, setdata] = useState(null);
+  const [isLoading, setloading] = useState(false);
   const fetchHabit = async () => {
+    setloading(true);
     try {
       // Use 'headers' instead of 'Headers' and pass params as an object
       const res = await axios.get(`${baseUrl}/userdata/gethabit`, {
@@ -28,6 +31,7 @@ const Dashboard = () => {
     } catch (err) {
       console.error(err);
     }
+    setloading(false);
   };
   useEffect(() => {
     fetchHabit();
@@ -56,6 +60,7 @@ const Dashboard = () => {
           );
         })}
       </div>
+      {isLoading && <Loading />}
     </main>
   );
 };

@@ -5,12 +5,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { baseUrl } from "../config";
 import axios from "axios";
 import Loading from "../HomeComponents/Loading";
+import { generateToken } from "../firebase";
 function SignupPage() {
   let navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     userName: "",
     password: "",
+    FCM: "",
   });
   const [message, setMessage] = useState("");
   const [isLoding, setIsLoading] = useState(false);
@@ -36,7 +38,9 @@ function SignupPage() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    formData.FCM = await generateToken();
     const newdata = JSON.stringify(formData);
+
     setIsLoading(true);
     try {
       const response = await axios.post(`${baseUrl}/userdata/signup`, newdata, {

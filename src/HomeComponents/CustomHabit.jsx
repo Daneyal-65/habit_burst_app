@@ -18,6 +18,21 @@ const CustomHabit = () => {
   const handleDuration = (id) => {
     setDuration(id);
   };
+  const gettoken = async (userid) => {
+    try {
+      const res = await axios.get(`${baseUrl}/userdata/FCM`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: { userId: userid },
+      });
+      // console.log(res.data);
+      return res.data.FCM;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const handleSubmitHabit = async (e) => {
     e.preventDefault();
     setIsLoader(true);
@@ -27,12 +42,15 @@ const CustomHabit = () => {
       weekday: "long",
     });
     const rem_Time = `${dayOfWeek} ${day}`;
+    const FCM = await gettoken(userid);
+    // console.log(FCM);
     const habitInfo = {
       userId: userid,
       habitName: userHabit,
       them: them,
       reminderTime: { remTime, time: rem_Time },
       description: description,
+      token: FCM || "",
     };
     try {
       const res = await axios.post(`${baseUrl}/userdata/habit`, habitInfo, {

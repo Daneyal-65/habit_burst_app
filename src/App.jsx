@@ -1,5 +1,3 @@
-// App.jsx
-
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Nav from "./components/Nav";
@@ -12,6 +10,8 @@ import LandingPage from "./components/LandingPage";
 import HabitList from "./components/HabitList";
 import { useDispatch, useSelector } from "react-redux";
 import { setAuthId } from "./services/reducers/Auth";
+import { onMessage } from "firebase/messaging";
+import { messaging } from "./firebase";
 function App() {
   const dispatch = useDispatch();
   const status = useSelector((s) => s.auth.value);
@@ -20,6 +20,9 @@ function App() {
       const status = JSON.parse(localStorage.getItem("userInfo"));
       dispatch(setAuthId({ currentState: true, id: status.id }));
     }
+    onMessage(messaging, (payload) => {
+      console.log(payload);
+    });
   }, []);
   return (
     <>
