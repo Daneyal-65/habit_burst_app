@@ -1,0 +1,56 @@
+.toggle-theme-container {
+  display: flex;
+  justify-content: center;
+  background: #ec09c6;
+  width: max-content;
+  border-radius: 3rem;
+  border: none;
+  outline: none;
+  box-shadow: 2px 2px 1px 1px#000130;
+}
+
+.toggle-button {
+  position: relative;
+  width: 2.8rem;
+  height: 1.5rem;
+  border-radius: 15px;
+  background-color: #eb0808;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.toggle-track {
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  background-color: #420505;
+  transform: translate(0, -50%);
+  transition: transform 0.3s ease;
+}
+
+.toggle-button.dark-mode .toggle-track {
+  transform: translate(20px, -50%);
+  background: #0509f7;
+}
+
+.toggle-button.light-mode .toggle-track {
+  transform: translate(0, -50%);
+  background-color: black;
+}
+.time-input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 7.5rem;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+.radio-btn {
+  position: absolute;
+  top: 0;
+  right: -8px;
+}

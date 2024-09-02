@@ -1,0 +1,68 @@
+.customCalendar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: max-content;
+}
+.customCalendar button {
+  width: 1.8rem;
+  height: 2rem;
+  outline: none;
+  box-shadow: 2px 1px 3px 4px blue inset 2px 3px 5px 1px cyan;
+}
+.customCalendar abbr {
+  text-decoration: none;
+  text-underline-offset: none;
+}
+.customCalendar button:hover {
+  background-color: rgb(211, 192, 19);
+  border-radius: 2rem;
+}
+.react-calendar__navigation {
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  padding-bottom: 1rem;
+}
+.react-calendar__navigation button {
+  width: 3.6rem;
+}
+
+.selectDate {
+  display: inline-block;
+  padding: 5px 7px;
+  font-size: 1rem;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid #0836558a;
+  color: #3498db;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.selectDate:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: #0836558a;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.selectDate:hover {
+  color: #fff;
+  background-color: #0836558a;
+}
+
+.selectDate:hover:after {
+  transform: translate(-50%, -50%) scale(15);
+  opacity: 0.15;
+}
