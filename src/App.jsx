@@ -20,9 +20,24 @@ function App() {
       const status = JSON.parse(localStorage.getItem("userInfo"));
       dispatch(setAuthId({ currentState: true, id: status.id }));
     }
-    onMessage(messaging, (payload) => {
-      console.log(payload);
-    });
+    //message by fire base 
+
+    const unsubscribe = onMessage(messaging, (payload) => {
+        console.log('Received foreground message:', payload);
+        // Here you can handle the received message, e.g., show a notification
+        new Notification(payload.notification.title, {
+          body: payload.notification.body,
+          icon: payload.notification.icon
+        });
+      });
+
+      return () => {
+        unsubscribe();
+      };
+
+
+    //message*************
+  
   }, []);
   return (
     <>
