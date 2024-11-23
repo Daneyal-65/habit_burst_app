@@ -33,9 +33,31 @@ const Dashboard = () => {
     }
     setloading(false);
   };
+    const handleDelete = async (id) => {
+    setloading(true);
+    try {
+      // Use 'headers' instead of 'Headers' and pass params as an object
+      const res = await axios.get(`${baseUrl}/userdata/del`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: {
+          userId: id,
+        },
+      });
+      const userdata = await res.data;
+      setdata(userdata);
+      // Log the data from the response
+      console.log(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+    setloading(false);
+  };
   useEffect(() => {
     fetchHabit();
   }, []);
+
   return (
     <main className="main">
       <div className="container">
@@ -52,7 +74,7 @@ const Dashboard = () => {
                 <li>Description :{item.description}</li>
               </div>
               <div className="flex gap-3">
-                <button className="btn">Delete</button>
+                <button className="btn" onClick={()=>handleDelete(item._id)}>Delete</button>
                 <button className="btn">Edit</button>
                 <button className="btn">Tasks</button>
               </div>
